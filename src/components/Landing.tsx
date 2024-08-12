@@ -1,7 +1,7 @@
-import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import OtpDialog from "./ui/LoginBox";
-import mixpanel from "mixpanel-browser";
+import { Button } from './ui/button';
+import { useEffect, useState } from 'react';
+import OtpDialog from './ui/LoginBox';
+import mixpanel from 'mixpanel-browser';
 
 function Landing() {
   mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, {
@@ -52,11 +52,15 @@ function Landing() {
               />
 
               <Button
-                onClick={() => (location.href = "/discover/explore")}
+                onClick={() => {
+                  mixpanel.track("see_smallcases_button_clicked");
+                  location.href = "/discover/explore";
+                }}
                 variant="outline"
                 className="border-blue-300 px-8 py-7 rounded-sm shadow hover:translate-y-[-2px] hover:shadow-xl hover:text-text-blue-400 transition-all active:translate-y-0 text-blue-400"
               >
-                See smallcases
+                {" "}
+                See smallcases{" "}
               </Button>
             </div>
             <div className="brokers">
