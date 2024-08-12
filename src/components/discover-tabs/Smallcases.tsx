@@ -141,13 +141,13 @@ function Smallcases() {
           </div>
           {wishlist.find((data) => data.name === smallcase.name) ? (
             <BsBookmarkFill
-              className="text-gray-400 ml-2 hidden group-hover:block transition-all relative top-1"
+              className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
               fontSize={24}
               onClick={() => dispatch(removeFromWishlist(smallcase.name))}
             />
           ) : (
             <BsBookmark
-              className="text-gray-400 ml-2 hidden group-hover:block transition-all relative top-1"
+              className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
               fontSize={24}
               onClick={() => dispatch(addWishlist(smallcase))}
             />
