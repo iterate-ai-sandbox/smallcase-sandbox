@@ -1,13 +1,13 @@
-import { Button } from "../ui/button";
-import { RiSlowDownFill } from "react-icons/ri";
-import { ImMeter } from "react-icons/im";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { addWishlist, removeFromWishlist } from "@/reducers/wishlist";
-import { smallcases, strategies } from "@/lib/smallcases";
-import mixpanel from "mixpanel-browser";
+import { Button } from '../ui/button';
+import { RiSlowDownFill } from 'react-icons/ri';
+import { ImMeter } from 'react-icons/im';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
+import { addWishlist, removeFromWishlist } from '@/reducers/wishlist';
+import { smallcases, strategies } from '@/lib/smallcases';
+import mixpanel from 'mixpanel-browser';
 
 interface CAGR {
   time: string;
@@ -76,7 +76,7 @@ function Smallcases() {
           min_amount: smallcase.minAmount.toString(),
           volatility: smallcase.volatility,
           isWatchlisted: wishlist.find(
-            (smallcase) => smallcase.name === smallcase.name
+            (smallcase) => smallcase.name === smallcase.name,
           )
             ? "true"
             : "false",
@@ -157,7 +157,7 @@ function Smallcases() {
     setSelectedStrategies((prev) =>
       prev.includes(strategy)
         ? prev.filter((s) => s !== strategy)
-        : [...prev, strategy]
+        : [...prev, strategy],
     );
   };
 
@@ -165,7 +165,7 @@ function Smallcases() {
     setSelectedVolatility((prev) =>
       prev.includes(volatility)
         ? prev.filter((v) => v !== volatility)
-        : [...prev, volatility]
+        : [...prev, volatility],
     );
   };
 
@@ -418,7 +418,7 @@ function Smallcases() {
                         name: strategy,
                       });
                     }}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    <button onClick={() => mixpanel.track('low_volatility')} class="whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 flex items-center justify-center gap-2 has-overlay"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="green" height="20" width="20" xmlns="http://www.w3.org/2000/svg" style="color: green;"><path d="M4 13C4 15.2091 4.89543 17.2091 6.34315 18.6569L4.92893 20.0711C3.11929 18.2614 2 15.7614 2 13 2 7.47715 6.47715 3 12 3 17.5228 3 22 7.47715 22 13 22 15.7614 20.8807 18.2614 19.0711 20.0711L17.6569 18.6569C19.1046 17.2091 20 15.2091 20 13 20 8.58172 16.4183 5 12 5 7.58172 5 4 8.58172 4 13ZM8.70703 8.29297 13.5 12.5 11.5 14.5 7.29282 9.70718 8.70703 8.29297Z"></path></svg>Low Volatility</button>
                   />
                   <label
                     htmlFor={`strategy-${index}`}
