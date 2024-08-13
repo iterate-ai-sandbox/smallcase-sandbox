@@ -1,18 +1,13 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Landing from "./components/Landing";
-import Home from "./components/Home";
-import Wishlist from "./components/Wishlist";
-import AllWeather from "./components/AllWeather";
-import { useEffect, useState } from "react";
 import mixpanel from "mixpanel-browser";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AllWeather from "./components/AllWeather";
 import Collections from "./components/discover-tabs/Collections";
 import Smallcases from "./components/discover-tabs/Smallcases";
+import Home from "./components/Home";
+import Landing from "./components/Landing";
+import Navbar from "./components/Navbar";
+import Wishlist from "./components/Wishlist";
 
 mixpanel.init("d7178ce399d605886cd9fa51223d07fe");
 
@@ -36,7 +31,7 @@ function App() {
 
   return (
     <>
-      <Router>
+      <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -52,7 +47,7 @@ function App() {
           <Route path="/watchlist" element={<Wishlist />} />
           <Route path="/all-weather-investing" element={<AllWeather />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </>
   );
 }
