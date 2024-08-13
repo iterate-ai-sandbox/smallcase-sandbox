@@ -150,7 +150,9 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
       </div>
       <div
         className={`middle ${
-          location.pathname === "/discover/explore" ? "hidden" : ""
+          location.pathname === "/discover/explore"
+            ? "hidden"
+            : "hidden xl:block"
         }`}
       >
         <Select
@@ -265,12 +267,12 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
             placeholder="Smallcase, mutual fund, stock or manager"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="rounded-none px-3 py-1 text-sm focus:outline-none pl-10 w-[360px]"
+            className="rounded-none px-3 py-1 text-sm focus:outline-none pl-10 w-[150px] lg:w-[360px]"
           />
           <span className="z-0 h-[1px] w-full rounded-none bg-gray-400 relative top-4"></span>
         </div>
         {isInputFocused && (
-          <div className="searched-bar absolute border rounded mt-5 w-[360px]  bg-white p-3 shadow-lg poppins-regular z-[10]">
+          <div className="searched-bar absolute border rounded mt-5 w-fit  bg-white p-3 shadow-lg poppins-regular z-[10]">
             {searchQuery?.length < 3 && (
               <div className="queried-content p-2 poppins-regular">
                 <p className="text-sm">Search for at least 3 characters</p>
@@ -283,7 +285,7 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
                 </p>
                 {Smallcasess.map((smallcase, index) => (
                   <div
-                    className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-100 rounded-md"
+                    className="flex items-start lg:items-center gap-2 p-3 cursor-pointer hover:bg-gray-100 rounded-md lg:flex-row flex-col"
                     key={index}
                     onClick={() => {
                       if (smallcase.name === "All Weather Investing") {

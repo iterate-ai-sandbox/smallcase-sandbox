@@ -10,6 +10,16 @@ import { smallcases, strategies } from "@/lib/smallcases";
 import mixpanel from "mixpanel-browser";
 import { useNavigate } from "react-router-dom";
 import Discover from "../Discover";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { addSorting } from "@/reducers/sorting";
 
 interface CAGR {
   time: string;
@@ -36,10 +46,16 @@ function Smallcases() {
   const dispatch = useDispatch();
   const wishlist = useSelector((state: RootState) => state.wishlist.data);
   const navigate = useNavigate();
+  const [sortingtype, setSortingType] = useState<string>("Popularity");
+  const [cagrTimee, setCagrTime] = useState<string>("1Y");
 
   useEffect(() => {
     mixpanel.track("all smallcases page opened");
   }, []);
+
+  useEffect(() => {
+    dispatch(addSorting({ sortingtype, cagrTime: cagrTimee }));
+  }, [cagrTimee, sortingtype]);
 
   const filterSmallcases = (smallcases: Smallcase[]) => {
     return smallcases.filter((smallcase) => {
@@ -98,57 +114,59 @@ function Smallcases() {
             <div className="flex items-center space-x-2">
               <h3 className="font-semibold">{smallcase.name}</h3>
               {smallcase.freeAccess && (
-                <span className="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                <span className="text-[10px] w-max bg-blue-100 text-blue-800 px-2 py-1 rounded">
                   Free Access
                 </span>
               )}
             </div>
           </div>
         </div>
-        <div className="flex justify-between mt-2 text-sm gap-2">
-          <p className="text-sm text-gray-600 w-[40%]">
+        <div className="flex justify-between mt-2 text-sm gap-2 xl:flex-row flex-col">
+          <p className="text-sm text-gray-600 xl:w-[40%] w-fit">
             {smallcase.description}
           </p>
-          <div className="w-max">
-            <p className="text-gray-600">Min. Amount</p>
-            <p className="font-semibold">
-              ₹ {smallcase.minAmount.toLocaleString()}
-            </p>
+          <div className="flex items-start md:items-center justify-start gap-6 md:flex-row flex-col">
+            <div className="w-max">
+              <p className="text-gray-600">Min. Amount</p>
+              <p className="font-semibold">
+                ₹ {smallcase.minAmount.toLocaleString()}
+              </p>
+            </div>
+            <div className="w-max">
+              <p className="text-gray-600">{cagrTime} CAGR</p>
+              <p className="font-semibold text-green-600">
+                {smallcase.cagr.find((cagr) => cagr.time === cagrTime)?.cagr}%
+              </p>
+            </div>
+            <div>
+              <Button
+                variant="outline"
+                className="flex items-center justify-center gap-2"
+              >
+                {smallcase.volatility === "Low" ? (
+                  <RiSlowDownFill color="green" size={20} />
+                ) : smallcase.volatility === "Med" ? (
+                  <ImMeter color="orange" size={20} />
+                ) : (
+                  <RiSlowDownFill color="red" size={20} />
+                )}
+                {smallcase.volatility} Volatility
+              </Button>
+            </div>
+            {wishlist.find((data) => data.name === smallcase.name) ? (
+              <BsBookmarkFill
+                className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
+                fontSize={24}
+                onClick={() => dispatch(removeFromWishlist(smallcase.name))}
+              />
+            ) : (
+              <BsBookmark
+                className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
+                fontSize={24}
+                onClick={() => dispatch(addWishlist(smallcase))}
+              />
+            )}
           </div>
-          <div className="w-max">
-            <p className="text-gray-600">{cagrTime} CAGR</p>
-            <p className="font-semibold text-green-600">
-              {smallcase.cagr.find((cagr) => cagr.time === cagrTime)?.cagr}%
-            </p>
-          </div>
-          <div>
-            <Button
-              variant="outline"
-              className="flex items-center justify-center gap-2"
-            >
-              {smallcase.volatility === "Low" ? (
-                <RiSlowDownFill color="green" size={20} />
-              ) : smallcase.volatility === "Med" ? (
-                <ImMeter color="orange" size={20} />
-              ) : (
-                <RiSlowDownFill color="red" size={20} />
-              )}
-              {smallcase.volatility} Volatility
-            </Button>
-          </div>
-          {wishlist.find((data) => data.name === smallcase.name) ? (
-            <BsBookmarkFill
-              className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
-              fontSize={24}
-              onClick={() => dispatch(removeFromWishlist(smallcase.name))}
-            />
-          ) : (
-            <BsBookmark
-              className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
-              fontSize={24}
-              onClick={() => dispatch(addWishlist(smallcase))}
-            />
-          )}
         </div>
 
         <p className="text-xs text-gray-500 mt-3">by {smallcase.by}</p>
@@ -184,8 +202,98 @@ function Smallcases() {
     <>
       <Discover />
       <div className="flex flex-col items-center justify-center">
-        <div className="smallcases flex items-start justify-between w-[1150px] poppins-regular gap-8">
+        <div className="smallcases flex items-start justify-between lg:w-2/3 w-[90%] poppins-regular gap-8">
           <div className="left">
+            <div className="select mb-8 w-full xl:hidden block">
+              <Select
+                onValueChange={(value) => {
+                  setSortingType(value);
+                  mixpanel.track("sorting applied", {
+                    type: value,
+                  });
+                }}
+              >
+                <SelectTrigger className="w-[180px] poppins-regular text-gray-400">
+                  <SelectValue
+                    defaultValue="Popularity"
+                    placeholder="Popularity"
+                  />
+                </SelectTrigger>
+                <SelectContent className="p-2 poppins-regular text-gray-500">
+                  <SelectGroup>
+                    <SelectItem defaultChecked value="Popularity">
+                      Popularity
+                    </SelectItem>
+                    <SelectItem value="minumum">Minimum Amount</SelectItem>
+                    <SelectItem value="recent">Recently Rebalanced</SelectItem>
+                    <p className="my-2 text-black">Returns</p>
+                    <SelectLabel>Time Period</SelectLabel>
+                    <div className="btn-groups border-[1px] border-gray-300 rounded">
+                      <Button
+                        onClick={() => setCagrTime("1M")}
+                        variant="ghost"
+                        size="icon"
+                        className={
+                          cagrTime === "1M"
+                            ? "bg-gray-200 text-[#1F7AE0] rounded-none"
+                            : ""
+                        }
+                      >
+                        1M
+                      </Button>
+                      <Button
+                        onClick={() => setCagrTime("6M")}
+                        variant="ghost"
+                        size="icon"
+                        className={
+                          cagrTime === "6M"
+                            ? "bg-gray-200 text-[#1F7AE0] rounded-none"
+                            : ""
+                        }
+                      >
+                        6M
+                      </Button>
+                      <Button
+                        onClick={() => setCagrTime("1Y")}
+                        variant="ghost"
+                        size="icon"
+                        className={
+                          cagrTime === "1Y"
+                            ? "bg-gray-200 text-[#1F7AE0] rounded-none"
+                            : ""
+                        }
+                      >
+                        1Y
+                      </Button>
+                      <Button
+                        onClick={() => setCagrTime("3Y")}
+                        variant="ghost"
+                        size="icon"
+                        className={
+                          cagrTime === "3Y"
+                            ? "bg-gray-200 text-[#1F7AE0] rounded-none"
+                            : ""
+                        }
+                      >
+                        3Y
+                      </Button>
+                      <Button
+                        onClick={() => setCagrTime("5Y")}
+                        className={
+                          cagrTime === "5Y"
+                            ? "bg-gray-200 text-[#1F7AE0] rounded-none"
+                            : ""
+                        }
+                        variant="ghost"
+                        size="icon"
+                      >
+                        5Y
+                      </Button>
+                    </div>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="total-filters border-b-[1px] border-gray-300 flex justify-between items-center">
               <p className="font-light text-[#535B62]">Filters</p>
               <Button
