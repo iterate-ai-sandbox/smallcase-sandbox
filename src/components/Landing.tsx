@@ -2,9 +2,11 @@ import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import OtpDialog from "./ui/LoginBox";
 import mixpanel from "mixpanel-browser";
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -46,7 +48,7 @@ function Landing() {
               />
 
               <Button
-                onClick={() => (location.href = "/discover/explore")}
+                onClick={() => navigate("/discover/explore")}
                 variant="outline"
                 className="border-blue-300 px-8 py-7 rounded-sm shadow hover:translate-y-[-2px] hover:shadow-xl hover:text-text-blue-400 transition-all active:translate-y-0 text-blue-400"
               >

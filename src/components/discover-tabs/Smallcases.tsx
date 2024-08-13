@@ -8,6 +8,8 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { addWishlist, removeFromWishlist } from "@/reducers/wishlist";
 import { smallcases, strategies } from "@/lib/smallcases";
 import mixpanel from "mixpanel-browser";
+import { useNavigate } from "react-router-dom";
+import Discover from "../Discover";
 
 interface CAGR {
   time: string;
@@ -33,6 +35,7 @@ function Smallcases() {
   const cagrTime = useSelector((state: RootState) => state.sorting.cagrTime);
   const dispatch = useDispatch();
   const wishlist = useSelector((state: RootState) => state.wishlist.data);
+  const navigate = useNavigate();
 
   useEffect(() => {
     mixpanel.track("all smallcases page opened");
@@ -83,7 +86,7 @@ function Smallcases() {
           subscription_type: smallcase.freeAccess ? "Free" : "Based",
         });
         if (smallcase.name === "All Weather Investing") {
-          location.href = "/all-weather-investing";
+          navigate("/all-weather-investing");
         }
       }}
       className="flex items-start space-x-4 p-4 border-b-[1px] transition-all hover:bg-gray-200/50 hover:shadow cursor-pointer hover:rounded-lg mb-4 group"
@@ -179,262 +182,269 @@ function Smallcases() {
 
   return (
     <>
-      <div className="smallcases flex items-start justify-between w-[1150px] poppins-regular gap-8">
-        <div className="left">
-          <div className="total-filters border-b-[1px] border-gray-300 flex justify-between items-center">
-            <p className="font-light text-[#535B62]">Filters</p>
-            <Button
-              variant="ghost"
-              className="text-[#1F7AE0] hover:text-[#1F7AE0]"
-              onClick={clearAllFilters}
-            >
-              Clear All
-            </Button>
-          </div>
-          <div className="subscription-type mt-5">
-            <p className="font-semibold text-[#535B62]">Subscription Type</p>
-            <div className="btn-groups border-[1px] border-gray-300 rounded w-max mt-3">
+      <Discover />
+      <div className="flex flex-col items-center justify-center">
+        <div className="smallcases flex items-start justify-between w-[1150px] poppins-regular gap-8">
+          <div className="left">
+            <div className="total-filters border-b-[1px] border-gray-300 flex justify-between items-center">
+              <p className="font-light text-[#535B62]">Filters</p>
               <Button
-                onClick={() => {
-                  setSelectedSubType("All");
-                  mixpanel.track("filter applied", {
-                    type: "subscription type",
-                    name: "All",
-                  });
-                }}
-                variant={selectedSubType === "All" ? "secondary" : "ghost"}
-                className={`w-[100px] text-[#535B62] hover:text-[#1F7AE0] rounded-none ${
-                  selectedSubType === "All" ? "text-[#1F7AE0]" : ""
-                }`}
+                variant="ghost"
+                className="text-[#1F7AE0] hover:text-[#1F7AE0]"
+                onClick={clearAllFilters}
               >
-                Show all
-              </Button>
-              <Button
-                onClick={() => {
-                  setSelectedSubType("Free");
-
-                  mixpanel.track("filter applied", {
-                    type: "subscription type",
-                    name: "Free Access",
-                  });
-                }}
-                variant={selectedSubType === "Free" ? "secondary" : "ghost"}
-                className={`w-[100px] text-[#535B62] hover:text-[#1F7AE0] rounded-none ${
-                  selectedSubType === "Free" ? "text-[#1F7AE0]" : ""
-                }`}
-              >
-                Free access
-              </Button>
-              <Button
-                onClick={() => {
-                  setSelectedSubType("Based");
-
-                  mixpanel.track("filter applied", {
-                    type: "subscription type",
-                    name: "Free Based",
-                  });
-                }}
-                variant={selectedSubType === "Based" ? "secondary" : "ghost"}
-                className={`w-[100px] text-[#535B62] hover:text-[#1F7AE0] rounded-none ${
-                  selectedSubType === "Based" ? "text-[#1F7AE0]" : ""
-                }`}
-              >
-                Free based
+                Clear All
               </Button>
             </div>
-          </div>
-          <div className="investment-amount mt-5">
-            <p className="font-semibold text-[#535B62]">Investment Amount</p>
-            <div className="investment-amount mt-3">
-              <div className="flex items-center mb-4">
-                <input
-                  id="investment-any"
-                  type="radio"
-                  value="any"
-                  name="investment-amount"
-                  checked={investmentAmount === "any"}
-                  onChange={() => {
-                    setInvestmentAmount("any");
+            <div className="subscription-type mt-5">
+              <p className="font-semibold text-[#535B62]">Subscription Type</p>
+              <div className="btn-groups border-[1px] border-gray-300 rounded w-max mt-3">
+                <Button
+                  onClick={() => {
+                    setSelectedSubType("All");
                     mixpanel.track("filter applied", {
-                      type: "Investment Amount",
-                      name: "Any",
+                      type: "subscription type",
+                      name: "All",
                     });
                   }}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  htmlFor="investment-any"
-                  className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
+                  variant={selectedSubType === "All" ? "secondary" : "ghost"}
+                  className={`w-[100px] text-[#535B62] hover:text-[#1F7AE0] rounded-none ${
+                    selectedSubType === "All" ? "text-[#1F7AE0]" : ""
+                  }`}
                 >
-                  Any
-                </label>
-              </div>
-              <div className="flex items-center mb-4">
-                <input
-                  id="investment-5000"
-                  type="radio"
-                  value="5000"
-                  name="investment-amount"
-                  checked={investmentAmount === "5000"}
-                  onChange={() => {
-                    setInvestmentAmount("5000");
-                    mixpanel.track("filter applied", {
-                      type: "Investment Amount",
-                      name: "Under Five Thousand",
-                    });
-                  }}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  htmlFor="investment-5000"
-                  className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
-                >
-                  Under ₹ 5,000
-                </label>
-              </div>
-              <div className="flex items-center mb-4">
-                <input
-                  id="investment-25000"
-                  type="radio"
-                  value="25000"
-                  name="investment-amount"
-                  checked={investmentAmount === "25000"}
-                  onChange={() => {
-                    setInvestmentAmount("25000");
+                  Show all
+                </Button>
+                <Button
+                  onClick={() => {
+                    setSelectedSubType("Free");
 
                     mixpanel.track("filter applied", {
-                      type: "Investment Amount",
-                      name: "Under Twenty Five Thousand",
+                      type: "subscription type",
+                      name: "Free Access",
                     });
                   }}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  htmlFor="investment-25000"
-                  className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
+                  variant={selectedSubType === "Free" ? "secondary" : "ghost"}
+                  className={`w-[100px] text-[#535B62] hover:text-[#1F7AE0] rounded-none ${
+                    selectedSubType === "Free" ? "text-[#1F7AE0]" : ""
+                  }`}
                 >
-                  Under ₹ 25,000
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="investment-50000"
-                  type="radio"
-                  value="50000"
-                  name="investment-amount"
-                  checked={investmentAmount === "50000"}
-                  onChange={() => {
-                    setInvestmentAmount("50000");
+                  Free access
+                </Button>
+                <Button
+                  onClick={() => {
+                    setSelectedSubType("Based");
 
                     mixpanel.track("filter applied", {
-                      type: "Investment Amount",
-                      name: "Under Fifty Thousand",
+                      type: "subscription type",
+                      name: "Free Based",
                     });
                   }}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  htmlFor="investment-50000"
-                  className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
+                  variant={selectedSubType === "Based" ? "secondary" : "ghost"}
+                  className={`w-[100px] text-[#535B62] hover:text-[#1F7AE0] rounded-none ${
+                    selectedSubType === "Based" ? "text-[#1F7AE0]" : ""
+                  }`}
                 >
-                  Under ₹ 50,000
-                </label>
+                  Free based
+                </Button>
               </div>
             </div>
-          </div>
-          <div className="volatility mt-6">
-            <p className="font-semibold text-[#535B62]">Volatility</p>
-            <div className="btn-group flex items-center justify-start space-x-2 mt-3">
-              <Button
-                variant={
-                  selectedVolatility.includes("Low") ? "secondary" : "outline"
-                }
-                size="icon"
-                className="flex flex-col items-center justify-center h-14 w-20"
-                onClick={() => {
-                  handleVolatilityChange("Low");
-                  mixpanel.track("filter applied", {
-                    type: "Volatility",
-                    name: "Low",
-                  });
-                }}
-              >
-                <RiSlowDownFill color="green" className="mb-2" size={20} />
-                Low
-              </Button>
-              <Button
-                variant={
-                  selectedVolatility.includes("Med") ? "secondary" : "outline"
-                }
-                size="icon"
-                className="flex flex-col items-center justify-center h-14 w-20"
-                onClick={() => {
-                  handleVolatilityChange("Med");
-                  mixpanel.track("filter applied", {
-                    type: "Volatility",
-                    name: "Medium",
-                  });
-                }}
-              >
-                <ImMeter color="orange" className="mb-2" size={20} />
-                Medium
-              </Button>
-              <Button
-                variant={
-                  selectedVolatility.includes("High") ? "secondary" : "outline"
-                }
-                size="icon"
-                className="flex flex-col items-center justify-center h-14 w-20"
-                onClick={() => {
-                  handleVolatilityChange("High");
-                  mixpanel.track("filter applied", {
-                    type: "Volatility",
-                    name: "High",
-                  });
-                }}
-              >
-                <RiSlowDownFill color="red" className="mb-2" size={20} />
-                High
-              </Button>
-            </div>
-          </div>
-          <div className="strategy mt-6">
-            <p className="font-semibold text-[#535B62]">Investment Strategy</p>
-            <div className="all-startegies mt-4">
-              {strategies.map((strategy, index) => (
-                <div
-                  key={index}
-                  className="flex items-center transition-all hover:bg-gray-200 hover:rounded cursor-pointer p-3"
-                >
+            <div className="investment-amount mt-5">
+              <p className="font-semibold text-[#535B62]">Investment Amount</p>
+              <div className="investment-amount mt-3">
+                <div className="flex items-center mb-4">
                   <input
-                    id={`strategy-${index}`}
-                    type="checkbox"
-                    value={strategy}
-                    checked={selectedStrategies.includes(strategy)}
+                    id="investment-any"
+                    type="radio"
+                    value="any"
+                    name="investment-amount"
+                    checked={investmentAmount === "any"}
                     onChange={() => {
-                      handleStrategyChange(strategy);
+                      setInvestmentAmount("any");
                       mixpanel.track("filter applied", {
-                        type: "Investment Strategy",
-                        name: strategy,
+                        type: "Investment Amount",
+                        name: "Any",
                       });
                     }}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
-                    htmlFor={`strategy-${index}`}
-                    className="ms-2 text-[#535B62] text-sm font-medium"
+                    htmlFor="investment-any"
+                    className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
                   >
-                    {strategy}
+                    Any
                   </label>
                 </div>
-              ))}
+                <div className="flex items-center mb-4">
+                  <input
+                    id="investment-5000"
+                    type="radio"
+                    value="5000"
+                    name="investment-amount"
+                    checked={investmentAmount === "5000"}
+                    onChange={() => {
+                      setInvestmentAmount("5000");
+                      mixpanel.track("filter applied", {
+                        type: "Investment Amount",
+                        name: "Under Five Thousand",
+                      });
+                    }}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="investment-5000"
+                    className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
+                  >
+                    Under ₹ 5,000
+                  </label>
+                </div>
+                <div className="flex items-center mb-4">
+                  <input
+                    id="investment-25000"
+                    type="radio"
+                    value="25000"
+                    name="investment-amount"
+                    checked={investmentAmount === "25000"}
+                    onChange={() => {
+                      setInvestmentAmount("25000");
+
+                      mixpanel.track("filter applied", {
+                        type: "Investment Amount",
+                        name: "Under Twenty Five Thousand",
+                      });
+                    }}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="investment-25000"
+                    className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
+                  >
+                    Under ₹ 25,000
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    id="investment-50000"
+                    type="radio"
+                    value="50000"
+                    name="investment-amount"
+                    checked={investmentAmount === "50000"}
+                    onChange={() => {
+                      setInvestmentAmount("50000");
+
+                      mixpanel.track("filter applied", {
+                        type: "Investment Amount",
+                        name: "Under Fifty Thousand",
+                      });
+                    }}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="investment-50000"
+                    className="ms-2 text-sm font-medium text-[#535B62] dark:text-gray-300"
+                  >
+                    Under ₹ 50,000
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="volatility mt-6">
+              <p className="font-semibold text-[#535B62]">Volatility</p>
+              <div className="btn-group flex items-center justify-start space-x-2 mt-3">
+                <Button
+                  variant={
+                    selectedVolatility.includes("Low") ? "secondary" : "outline"
+                  }
+                  size="icon"
+                  className="flex flex-col items-center justify-center h-14 w-20"
+                  onClick={() => {
+                    handleVolatilityChange("Low");
+                    mixpanel.track("filter applied", {
+                      type: "Volatility",
+                      name: "Low",
+                    });
+                  }}
+                >
+                  <RiSlowDownFill color="green" className="mb-2" size={20} />
+                  Low
+                </Button>
+                <Button
+                  variant={
+                    selectedVolatility.includes("Med") ? "secondary" : "outline"
+                  }
+                  size="icon"
+                  className="flex flex-col items-center justify-center h-14 w-20"
+                  onClick={() => {
+                    handleVolatilityChange("Med");
+                    mixpanel.track("filter applied", {
+                      type: "Volatility",
+                      name: "Medium",
+                    });
+                  }}
+                >
+                  <ImMeter color="orange" className="mb-2" size={20} />
+                  Medium
+                </Button>
+                <Button
+                  variant={
+                    selectedVolatility.includes("High")
+                      ? "secondary"
+                      : "outline"
+                  }
+                  size="icon"
+                  className="flex flex-col items-center justify-center h-14 w-20"
+                  onClick={() => {
+                    handleVolatilityChange("High");
+                    mixpanel.track("filter applied", {
+                      type: "Volatility",
+                      name: "High",
+                    });
+                  }}
+                >
+                  <RiSlowDownFill color="red" className="mb-2" size={20} />
+                  High
+                </Button>
+              </div>
+            </div>
+            <div className="strategy mt-6">
+              <p className="font-semibold text-[#535B62]">
+                Investment Strategy
+              </p>
+              <div className="all-startegies mt-4">
+                {strategies.map((strategy, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center transition-all hover:bg-gray-200 hover:rounded cursor-pointer p-3"
+                  >
+                    <input
+                      id={`strategy-${index}`}
+                      type="checkbox"
+                      value={strategy}
+                      checked={selectedStrategies.includes(strategy)}
+                      onChange={() => {
+                        handleStrategyChange(strategy);
+                        mixpanel.track("filter applied", {
+                          type: "Investment Strategy",
+                          name: strategy,
+                        });
+                      }}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={`strategy-${index}`}
+                      className="ms-2 text-[#535B62] text-sm font-medium"
+                    >
+                      {strategy}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="right">
-          {filteredSmallcases.map((smallcase, index) => (
-            <SmallcaseCard key={index} smallcase={smallcase} />
-          ))}
+          <div className="right">
+            {filteredSmallcases.map((smallcase, index) => (
+              <SmallcaseCard key={index} smallcase={smallcase} />
+            ))}
+          </div>
         </div>
       </div>
     </>

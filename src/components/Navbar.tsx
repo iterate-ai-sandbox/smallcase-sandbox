@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -11,6 +11,7 @@ import mixpanel from "mixpanel-browser";
 
 const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -21,7 +22,7 @@ const Navbar = () => {
     } else {
       setIsUserLoggedIn(false);
     }
-  }, []);
+  }, [location.pathname]);
 
   return (
     <nav className="fixed top-0 left-0 z-50 w-full bg-white shadow dark:bg-gray-950">
@@ -92,7 +93,7 @@ const Navbar = () => {
                     onClick={() => {
                       localStorage.removeItem("phoneNumber");
                       setIsUserLoggedIn(false);
-                      location.href = "/";
+                      navigate("/");
                     }}
                     className="w-fit"
                     variant="ghost"

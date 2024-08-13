@@ -7,11 +7,12 @@ import {
 import Navbar from "./components/Navbar";
 import Landing from "./components/Landing";
 import Home from "./components/Home";
-import Discover from "./components/Discover";
 import Wishlist from "./components/Wishlist";
 import AllWeather from "./components/AllWeather";
 import { useEffect, useState } from "react";
 import mixpanel from "mixpanel-browser";
+import Collections from "./components/discover-tabs/Collections";
+import Smallcases from "./components/discover-tabs/Smallcases";
 
 mixpanel.init("d7178ce399d605886cd9fa51223d07fe");
 
@@ -29,33 +30,26 @@ function App() {
     }
   }, []);
 
+  if (!isUserLoggedIn && location.pathname !== "/") {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <Router>
         <Navbar />
         <Routes>
-          <Route
-            path="/"
-            element={isUserLoggedIn ? <Navigate to="/home" /> : <Landing />}
-          />
-          <Route
-            path="/home"
-            element={isUserLoggedIn ? <Home /> : <Landing />}
-          />
+          <Route path="/" element={<Landing />} />
+          <Route path="/home" element={<Home />} />
           <Route
             path="/discover"
             element={
               isUserLoggedIn ? <Navigate to="/discover/explore" /> : <Landing />
             }
           />
-          <Route
-            path="/discover/*"
-            element={isUserLoggedIn ? <Discover /> : <Landing />}
-          />
-          <Route
-            path="/watchlist"
-            element={isUserLoggedIn ? <Wishlist /> : <Landing />}
-          />
+          <Route path="/discover/explore" element={<Collections />} />
+          <Route path="/discover/smallcases" element={<Smallcases />} />
+          <Route path="/watchlist" element={<Wishlist />} />
           <Route path="/all-weather-investing" element={<AllWeather />} />
         </Routes>
       </Router>

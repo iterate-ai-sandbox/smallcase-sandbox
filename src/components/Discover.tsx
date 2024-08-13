@@ -1,6 +1,4 @@
-import Collections from "./discover-tabs/Collections";
 import LineTabs from "./discover-tabs/Tabs";
-import Smallcases from "./discover-tabs/Smallcases";
 
 function Discover() {
   return (
@@ -9,11 +7,6 @@ function Discover() {
         <div className="tabs w-[1150px] flex justify-center">
           <LineTabs />
         </div>
-        {location.pathname === "/discover/explore" ? (
-          <Collections />
-        ) : (
-          <Smallcases />
-        )}
       </div>
     </>
   );

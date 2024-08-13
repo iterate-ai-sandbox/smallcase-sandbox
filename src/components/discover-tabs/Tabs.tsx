@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { smallcases } from "@/lib/smallcases";
 import { Smallcase } from "./Smallcases";
 import mixpanel from "mixpanel-browser";
+import { useNavigate } from "react-router-dom";
 
 const tabs = ["Collections", "All smallcases", "Managers"];
 
@@ -27,14 +28,17 @@ interface TabProps {
 }
 
 const Tab = ({ text, selected, setSelected, customID }: TabProps) => {
+  const navigate = useNavigate();
+
   return (
     <button
       onClick={() => {
         setSelected(text);
-        location.href =
+        navigate(
           text.toLowerCase() === "all smallcases"
             ? "/discover/smallcases"
-            : "/discover/explore";
+            : "/discover/explore"
+        );
       }}
       className="hover:text-[#1F7AE0]
       } relative rounded-md px-2 py-5 text-sm font-medium poppins-regular text-gray-400 transition-colors duration-300 focus-within:outline-[#1F7AE0]"
@@ -59,6 +63,8 @@ interface LineTabProps {
 }
 
 const LineTabs = ({ center, customID }: LineTabProps) => {
+  const navigate = useNavigate();
+
   const [selected, setSelected] = useState<string>(
     location.pathname === "/discover/explore" ? "Collections" : "All smallcases"
   );
@@ -281,7 +287,7 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
                     key={index}
                     onClick={() => {
                       if (smallcase.name === "All Weather Investing") {
-                        location.href = "/all-weather-investing";
+                        navigate("/all-weather-investing");
                       }
                     }}
                   >

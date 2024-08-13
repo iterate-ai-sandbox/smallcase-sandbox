@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import mixpanel from "mixpanel-browser";
+import Discover from "../Discover";
 
 function Collections() {
   useEffect(() => {
@@ -7,6 +8,8 @@ function Collections() {
   }, []);
   return (
     <>
+      <Discover />
+
       <div className="collections">
         <div className="top">
           <img

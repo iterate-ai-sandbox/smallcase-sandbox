@@ -15,6 +15,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useNavigate } from "react-router-dom";
 
 interface OtpDialogProps {
   isUserLoggedIn: boolean;
@@ -28,10 +29,11 @@ const OtpDialog: React.FC<OtpDialogProps> = ({
   const [phoneNumber, setPhoneNumber] = useState<number | null>(null);
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
   const [otp, setOTP] = useState<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (otp === "1234" && phoneNumber) {
-      location.href = "/discover/explore";
+      navigate("/discover/explore");
       localStorage.setItem("phoneNumber", phoneNumber.toString());
     }
   }, [otp, phoneNumber]);
