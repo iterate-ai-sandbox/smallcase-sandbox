@@ -1,8 +1,8 @@
-import { RootState } from "@/store";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "./ui/button";
-import { removeFromWishlist, addWishlist } from "@/reducers/wishlist";
+import { RootState } from '@/store"; import mixpanel from 'mixpanel-browser';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from './ui/button';
+import { addWishlist, removeFromWishlist } from '@/reducers/wishlist';
 import {
   Dialog,
   DialogContent,
@@ -114,7 +114,7 @@ function AllWeather() {
               <div className="bottom flex flex-col items-center justify-center gap-2 w-full">
                 <Dialog>
                   <DialogTrigger className="w-full">
-                    <Button className="w-full h-12 bg-green-600 rounded-sm">
+                    <Button className="w-full h-12 bg-green-600 rounded-sm" onClick={() => { mixpanel.track('invest_now_clicked', { minimum_invested_amount: minAmount }); }}
                       Invest Now
                     </Button>
                   </DialogTrigger>
@@ -135,7 +135,7 @@ function AllWeather() {
                   className="w-full h-12 rounded-sm text-blue-600 hover:text-blue-600"
                   onClick={() => {
                     const isSmallcaseInWishlist = wishlist.find(
-                      (smallcase) => smallcase.name === "All Weather Investing"
+                      (smallcase) => smallcase.name === "All Weather Investing",
                     );
                     if (isSmallcaseInWishlist) {
                       dispatch(removeFromWishlist("All Weather Investing"));
@@ -157,13 +157,13 @@ function AllWeather() {
                           volatility: "Low",
                           freeAccess: true,
                           icon: "https://assets.smallcase.com/images/smallcases/160/SCAW_0001.png",
-                        })
+                        }),
                       );
                     }
                   }}
                 >
                   {wishlist.find(
-                    (smallcase) => smallcase.name === "All Weather Investing"
+                    (smallcase) => smallcase.name === "All Weather Investing",
                   )
                     ? "In Watchlist"
                     : "Add to Watchlist"}
