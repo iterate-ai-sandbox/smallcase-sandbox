@@ -2,13 +2,6 @@ import { useEffect } from "react";
 import mixpanel from "mixpanel-browser";
 
 function Collections() {
-
-  mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, {
-    debug: true,
-    track_pageview: true,
-    persistence: "localStorage",
-  });
-
   useEffect(() => {
     mixpanel.track("discover page opened");
   }, []);

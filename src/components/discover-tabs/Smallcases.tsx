@@ -25,12 +25,6 @@ export interface Smallcase {
   icon: string;
 }
 
-mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, {
-  debug: true,
-  track_pageview: true,
-  persistence: "localStorage",
-});
-
 function Smallcases() {
   const [selectedSubType, setSelectedSubType] = useState<string>("All");
   const [investmentAmount, setInvestmentAmount] = useState<string>("any");

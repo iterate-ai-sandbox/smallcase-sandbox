@@ -2,12 +2,6 @@ import mixpanel from "mixpanel-browser";
 import { useEffect } from "react";
 
 function Home() {
-  mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, {
-    debug: true,
-    track_pageview: true,
-    persistence: "localStorage",
-  });
-
   useEffect(() => {
     mixpanel.track("home page opened");
   }, []);

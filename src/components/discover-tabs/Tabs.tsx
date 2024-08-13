@@ -17,12 +17,6 @@ import { smallcases } from "@/lib/smallcases";
 import { Smallcase } from "./Smallcases";
 import mixpanel from "mixpanel-browser";
 
-mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, {
-  debug: true,
-  track_pageview: true,
-  persistence: "localStorage",
-});
-
 const tabs = ["Collections", "All smallcases", "Managers"];
 
 interface TabProps {

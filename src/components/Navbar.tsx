@@ -10,12 +10,6 @@ import OtpDialog from "./ui/LoginBox";
 import mixpanel from "mixpanel-browser";
 
 const Navbar = () => {
-  mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, {
-    debug: true,
-    track_pageview: true,
-    persistence: "localStorage",
-  });
-
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {

@@ -11,6 +11,9 @@ import Discover from "./components/Discover";
 import Wishlist from "./components/Wishlist";
 import AllWeather from "./components/AllWeather";
 import { useEffect, useState } from "react";
+import mixpanel from "mixpanel-browser";
+
+mixpanel.init("d7178ce399d605886cd9fa51223d07fe");
 
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
