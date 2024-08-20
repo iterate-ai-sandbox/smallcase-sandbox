@@ -22,7 +22,7 @@ function Landing() {
   return (
     <>
       <div className="hero mt-10">
-        <div className="overlay w-full poppins-medium flex flex-col items-center justify-center mt-[5.5rem] xl:mt-[7rem] 2xl:mt-[10rem] absolute z-[2]">
+        <div className="overlay w-full poppins-medium flex flex-col items-center justify-center mt-[5.5rem] xl:mt-[6.5rem] 2xl:mt-[10rem] absolute z-[2]">
           <div className="w-[60%]">
             <div className="headings w-[400px]">
               <h1 className="text-[50px] poppins-semibold text-[#2F363F] leading-[50px] tracking-tight">
@@ -71,7 +71,7 @@ function Landing() {
           <img
             src="/hero.png"
             alt="hero"
-            className="w-full xl:h-full h-[75vh] object-cover"
+            className="w-full xl:h-full h-[550px] object-cover"
           />
         </div>
       </div>
