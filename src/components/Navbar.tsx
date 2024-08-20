@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import OtpDialog from './ui/LoginBox';
+import mixpanel from 'mixpanel-browser';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import OtpDialog from "./ui/LoginBox";
-import mixpanel from "mixpanel-browser";
 
 const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
@@ -62,8 +62,15 @@ const Navbar = () => {
             </Link>
           </nav>
           <nav className="flex items-center space-x-8 ml-auto poppins-medium">
-            <Link to="#" className="text-sm text-gray-400">
-              Resources
+            <Link
+              to="#"
+              className="text-sm text-gray-400"
+              onClick={() =>
+                mixpanel.track("resources_clicked", { name: "hehe" })
+              }
+            >
+              {" "}
+              Resources{" "}
             </Link>
             {!isUserLoggedIn && (
               <OtpDialog
