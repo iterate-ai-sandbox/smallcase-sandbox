@@ -22,13 +22,13 @@ function Landing() {
   return (
     <>
       <div className="hero mt-10">
-        <div className="overlay w-full poppins-medium flex flex-col items-center justify-center mt-[5.5rem] xl:mt-[6.5rem] 2xl:mt-[10rem] absolute z-[2]">
+        <div className="overlay w-full poppins-medium flex flex-col items-center justify-center mt-[5.2rem] xl:mt-[6rem] 2xl:mt-[10rem] absolute z-[2]">
           <div className="w-[60%]">
             <div className="headings w-[400px]">
-              <h1 className="text-[50px] poppins-semibold text-[#2F363F] leading-[50px] tracking-tight">
+              <h1 className="text-[35px] xl:text-[50px] poppins-semibold text-[#2F363F] leading-[35px] xl:leading-[50px] tracking-tight">
                 Invest in ideas with smallcases
               </h1>
-              <p className="poppins-light w-[80%] mt-4">
+              <p className="poppins-light w-[80%] mt-4 xl:text-md text-sm">
                 Get simple, smart investment portfolios curated by experts
               </p>
             </div>
@@ -40,7 +40,7 @@ function Landing() {
                     onClick={() => {
                       mixpanel.track("login initiation page opened");
                     }}
-                    className="px-8 py-7 bg-[#1F7AE0] hover:bg-blue-600 rounded-sm mr-4"
+                    className="px-4 py-3 text-sm xl:text-md xl:px-8 xl:py-7 bg-[#1F7AE0] hover:bg-blue-600 rounded-sm mr-4"
                   >
                     Login
                   </Button>
@@ -50,19 +50,19 @@ function Landing() {
               <Button
                 onClick={() => navigate("/discover/explore")}
                 variant="outline"
-                className="border-blue-300 px-8 py-7 rounded-sm shadow hover:translate-y-[-2px] hover:shadow-xl hover:text-text-blue-400 transition-all active:translate-y-0 text-blue-400"
+                className="border-blue-300 px-4 py-3 text-sm xl:text-md xl:px-8 xl:py-7 rounded-sm shadow hover:translate-y-[-2px] hover:shadow-xl hover:text-text-blue-400 transition-all active:translate-y-0 text-blue-400"
               >
                 See smallcases
               </Button>
             </div>
             <div className="brokers">
-              <p className="poppins-light w-[80%] mt-4">
+              <p className="poppins-light w-[80%] mt-4 xl:text-md text-sm">
                 Supported on India&apos; largest brokers
               </p>
               <img
                 src="/brokers.PNG"
                 alt="brokers"
-                className="object-cover w-[350px] mt-4"
+                className="object-cover w-[240px] xl:w-[350px] mt-4"
               />
             </div>
           </div>
@@ -71,7 +71,7 @@ function Landing() {
           <img
             src="/hero.png"
             alt="hero"
-            className="w-full xl:h-full h-[550px] object-cover"
+            className="w-full xl:h-full h-[420px] object-cover"
           />
         </div>
       </div>
