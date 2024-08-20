@@ -119,8 +119,8 @@ function Smallcases() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between mt-2 text-sm gap-2 xl:flex-row flex-col">
-          <p className="text-sm text-gray-600 xl:w-[40%] w-fit">
+        <div className="flex justify-between mt-2 text-sm gap-2 2xl:flex-row flex-col">
+          <p className="text-sm text-gray-600 2xl:w-[40%] w-fit">
             {smallcase.description}
           </p>
           <div className="flex items-start md:items-center justify-start gap-6 md:flex-row flex-col">
@@ -153,13 +153,13 @@ function Smallcases() {
             </div>
             {wishlist.find((data) => data.name === smallcase.name) ? (
               <BsBookmarkFill
-                className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
+                className="text-gray-400 ml-2 invisible group-hover:visible"
                 fontSize={24}
                 onClick={() => dispatch(removeFromWishlist(smallcase.name))}
               />
             ) : (
               <BsBookmark
-                className="text-gray-400 ml-2 invisible group-hover:visible relative top-1"
+                className="text-gray-400 ml-2 invisible group-hover:visible"
                 fontSize={24}
                 onClick={() => dispatch(addWishlist(smallcase))}
               />
