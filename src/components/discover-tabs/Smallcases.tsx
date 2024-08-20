@@ -1,3 +1,16 @@
+import { smallcases, strategies } from '@/lib/smallcases';
+import { addSorting } from '@/reducers/sorting';
+import { addWishlist, removeFromWishlist } from '@/reducers/wishlist';
+import { RootState } from '@/store';
+import mixpanel from 'mixpanel-browser';
+import { useEffect, useState } from 'react';
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
+import { ImMeter } from 'react-icons/im';
+import { RiSlowDownFill } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Discover from '../Discover';
+import { Button } from '../ui/button';
 import {
   Select,
   SelectContent,
@@ -7,19 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { smallcases, strategies } from "@/lib/smallcases";
-import { addSorting } from "@/reducers/sorting";
-import { addWishlist, removeFromWishlist } from "@/reducers/wishlist";
-import { RootState } from "@/store";
-import mixpanel from "mixpanel-browser";
-import { useEffect, useState } from "react";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { ImMeter } from "react-icons/im";
-import { RiSlowDownFill } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Discover from "../Discover";
-import { Button } from "../ui/button";
 
 interface CAGR {
   time: string;
@@ -88,16 +88,13 @@ function Smallcases() {
     <div
       onClick={() => {
         mixpanel.track("smallcase selected", {
-          name: smallcase.name,
-          description: smallcase.description,
-          creator: smallcase.by,
-          cagr: smallcase.cagr.toString(),
-          min_amount: smallcase.minAmount.toString(),
-          volatility: smallcase.volatility,
-          isWatchlisted: wishlist.find((sm) => sm.name === smallcase.name)
-            ? "true"
-            : "false",
-          subscription_type: smallcase.freeAccess ? "Free" : "Based",
+          "smallcase name": smallcase.name,
+          "display subtext": smallcase.description,
+          "minimum amount": smallcase.minAmount,
+          "volatility status": smallcase.volatility,
+          "access status": smallcase.freeAccess ? "Free" : "Based",
+          "display cagr perc.":
+            smallcase.cagr.find((c) => c.time === cagrTime)?.cagr + "%",
         });
         if (smallcase.name === "All Weather Investing") {
           navigate("/all-weather-investing");
@@ -176,7 +173,7 @@ function Smallcases() {
     setSelectedStrategies((prev) =>
       prev.includes(strategy)
         ? prev.filter((s) => s !== strategy)
-        : [...prev, strategy]
+        : [...prev, strategy],
     );
   };
 
@@ -184,7 +181,7 @@ function Smallcases() {
     setSelectedVolatility((prev) =>
       prev.includes(volatility)
         ? prev.filter((v) => v !== volatility)
-        : [...prev, volatility]
+        : [...prev, volatility],
     );
   };
 
