@@ -1,15 +1,3 @@
-import { Button } from "../ui/button";
-import { RiSlowDownFill } from "react-icons/ri";
-import { ImMeter } from "react-icons/im";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { addWishlist, removeFromWishlist } from "@/reducers/wishlist";
-import { smallcases, strategies } from "@/lib/smallcases";
-import mixpanel from "mixpanel-browser";
-import { useNavigate } from "react-router-dom";
-import Discover from "../Discover";
 import {
   Select,
   SelectContent,
@@ -19,7 +7,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { smallcases, strategies } from "@/lib/smallcases";
 import { addSorting } from "@/reducers/sorting";
+import { addWishlist, removeFromWishlist } from "@/reducers/wishlist";
+import { RootState } from "@/store";
+import mixpanel from "mixpanel-browser";
+import { useEffect, useState } from "react";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { ImMeter } from "react-icons/im";
+import { RiSlowDownFill } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Discover from "../Discover";
+import { Button } from "../ui/button";
 
 interface CAGR {
   time: string;
@@ -94,9 +94,7 @@ function Smallcases() {
           cagr: smallcase.cagr.toString(),
           min_amount: smallcase.minAmount.toString(),
           volatility: smallcase.volatility,
-          isWatchlisted: wishlist.find(
-            (smallcase) => smallcase.name === smallcase.name
-          )
+          isWatchlisted: wishlist.find((sm) => sm.name === smallcase.name)
             ? "true"
             : "false",
           subscription_type: smallcase.freeAccess ? "Free" : "Based",
@@ -195,7 +193,6 @@ function Smallcases() {
     setInvestmentAmount("any");
     setSelectedVolatility([]);
     setSelectedStrategies([]);
-    mixpanel.track("all filters cleared");
   };
 
   return (
@@ -299,7 +296,10 @@ function Smallcases() {
               <Button
                 variant="ghost"
                 className="text-[#1F7AE0] hover:text-[#1F7AE0]"
-                onClick={clearAllFilters}
+                onClick={() => {
+                  clearAllFilters();
+                  mixpanel.track("all filters cleared");
+                }}
               >
                 Clear All
               </Button>

@@ -1,6 +1,3 @@
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -10,13 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "../ui/button";
-import { addSorting } from "@/reducers/sorting";
-import { useDispatch } from "react-redux";
 import { smallcases } from "@/lib/smallcases";
-import { Smallcase } from "./Smallcases";
+import { cn } from "@/lib/utils";
+import { addSorting } from "@/reducers/sorting";
+import { motion } from "framer-motion";
 import mixpanel from "mixpanel-browser";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { Smallcase } from "./Smallcases";
 
 const tabs = ["Collections", "All smallcases", "Managers"];
 
@@ -93,22 +93,22 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
       setSmallcases([]);
     }
   }, [searchQuery]);
+  //FIXED: use `onKeyDown` inside of the input element rather than adding an event listener to the window
+  // useEffect(() => {
+  //   const handleKeyPress = (event: KeyboardEvent) => {
+  //     if (event.key === "Enter" && searchQuery.length >= 3) {
+  //       mixpanel.track("search applied", {
+  //         searchQuery,
+  //       });
+  //     }
+  //   };
 
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === "Enter" && searchQuery.length >= 3) {
-        mixpanel.track("search applied", {
-          searchQuery,
-        });
-      }
-    };
+  //   window.addEventListener("keydown", handleKeyPress);
 
-    window.addEventListener("keydown", handleKeyPress);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [searchQuery]);
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyPress);
+  //   };
+  // }, [searchQuery]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -263,10 +263,20 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
 
         <div className="w-fit flex flex-col poppins-regular">
           <input
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && searchQuery.length >= 3) {
+                alert("key pressed");
+                mixpanel.track("search applied", {
+                  searchQuery,
+                });
+              }
+            }}
             type="text"
             placeholder="Smallcase, mutual fund, stock or manager"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
             className="rounded-none px-3 py-1 text-sm focus:outline-none pl-10 w-[150px] lg:w-[360px]"
           />
           <span className="z-0 h-[1px] w-full rounded-none bg-gray-400 relative top-4"></span>
