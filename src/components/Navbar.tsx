@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import OtpDialog from './ui/LoginBox';
+import mixpanel from 'mixpanel-browser';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import OtpDialog from "./ui/LoginBox";
-import mixpanel from "mixpanel-browser";
 
 const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
@@ -50,8 +50,12 @@ const Navbar = () => {
               <Link
                 to={isUserLoggedIn ? "/watchlist" : ""}
                 className="text-sm text-gray-400"
+                onClick={() =>
+                  mixpanel.track("watchlist_clicked", { prop: "name" })
+                }
               >
-                Watchlist
+                {" "}
+                Watchlist{" "}
               </Link>
               {location.pathname === "/watchlist" && (
                 <span className="z-0 h-[1px] w-full relative top-[1.2rem] rounded-none bg-[#1F7AE0]"></span>
