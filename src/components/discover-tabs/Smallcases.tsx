@@ -1,3 +1,16 @@
+import { smallcases, strategies } from '@/lib/smallcases';
+import { addSorting } from '@/reducers/sorting';
+import { addWishlist, removeFromWishlist } from '@/reducers/wishlist';
+import { RootState } from '@/store';
+import mixpanel from 'mixpanel-browser';
+import { useEffect, useState } from 'react';
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
+import { ImMeter } from 'react-icons/im';
+import { RiSlowDownFill } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Discover from '../Discover';
+import { Button } from '../ui/button';
 import {
   Select,
   SelectContent,
@@ -7,19 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { smallcases, strategies } from "@/lib/smallcases";
-import { addSorting } from "@/reducers/sorting";
-import { addWishlist, removeFromWishlist } from "@/reducers/wishlist";
-import { RootState } from "@/store";
-import mixpanel from "mixpanel-browser";
-import { useEffect, useState } from "react";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { ImMeter } from "react-icons/im";
-import { RiSlowDownFill } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Discover from "../Discover";
-import { Button } from "../ui/button";
 
 interface CAGR {
   time: string;
@@ -120,7 +120,7 @@ function Smallcases() {
           </div>
         </div>
         <div className="flex justify-between mt-2 text-sm gap-2 2xl:flex-row flex-col">
-          <p className="text-sm text-gray-600 2xl:w-[40%] w-fit">
+          <a class="text-sm text-gray-400 has-overlay" href="/" onClick={() => { mixpanel.track('resources_clicked'); }}
             {smallcase.description}
           </p>
           <div className="flex items-start md:items-center justify-start gap-6 md:flex-row flex-col">
@@ -176,7 +176,7 @@ function Smallcases() {
     setSelectedStrategies((prev) =>
       prev.includes(strategy)
         ? prev.filter((s) => s !== strategy)
-        : [...prev, strategy]
+        : [...prev, strategy],
     );
   };
 
@@ -184,7 +184,7 @@ function Smallcases() {
     setSelectedVolatility((prev) =>
       prev.includes(volatility)
         ? prev.filter((v) => v !== volatility)
-        : [...prev, volatility]
+        : [...prev, volatility],
     );
   };
 
