@@ -1,10 +1,13 @@
-import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import OtpDialog from "./ui/LoginBox";
-import mixpanel from "mixpanel-browser";
-import { useNavigate } from "react-router-dom";
+import { Button } from './ui/button';
+import { useEffect, useState } from 'react';
+import OtpDialog from './ui/LoginBox';
+import mixpanel from 'mixpanel-browser';
+import { useNavigate } from 'react-router-dom';
 
 function Landing() {
+  useEffect(() => {
+    mixpanel.track("home page opened");
+  }, []);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
 
