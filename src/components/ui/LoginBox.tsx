@@ -1,5 +1,9 @@
-import { useState, useEffect, ReactNode } from "react";
-import { Button } from "../ui/button";
+import { ReactNode, useEffect, useState } from 'react';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { useNavigate } from 'react-router-dom';
+import mixpanel from 'mixpanel-browser';
 import {
   Dialog,
   DialogContent,
@@ -7,15 +11,12 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "../ui/input";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import { useNavigate } from "react-router-dom";
 
 interface OtpDialogProps {
   isUserLoggedIn: boolean;
@@ -64,7 +65,10 @@ const OtpDialog: React.FC<OtpDialogProps> = ({
                     onChange={(e) => setPhoneNumber(Number(e.target.value))}
                   />
                   <Button
-                    onClick={() => setIsOtpSent(true)}
+                    onClick={() => {
+                      mixpanel.track("login clicked again");
+                      setIsOtpSent(true);
+                    }}
                     disabled={
                       !phoneNumber || phoneNumber.toString().length < 10
                     }
