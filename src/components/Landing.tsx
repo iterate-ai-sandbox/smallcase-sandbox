@@ -1,8 +1,8 @@
-import { Button } from './ui/button';
-import { useEffect, useState } from 'react';
-import OtpDialog from './ui/LoginBox';
-import mixpanel from 'mixpanel-browser';
-import { useNavigate } from 'react-router-dom';
+import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
+import OtpDialog from "./ui/LoginBox";
+import mixpanel from "mixpanel-browser";
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
@@ -25,16 +25,8 @@ function Landing() {
         <div className="overlay w-full poppins-medium flex flex-col items-center justify-center mt-[5.2rem] xl:mt-[6rem] 2xl:mt-[10rem] absolute z-[2]">
           <div className="w-[60%]">
             <div className="headings w-[400px]">
-              <h1
-                className="text-[35px] xl:text-[50px] poppins-semibold text-[#2F363F] leading-[35px] xl:leading-[50px] tracking-tight"
-                onClick={() => {
-                  mixpanel.track("headline_clicked", {
-                    user_signed_in: isUserLoggedIn,
-                  });
-                }}
-              >
-                {" "}
-                Invest in ideas with smallcases{" "}
+              <h1 className="text-[35px] xl:text-[50px] poppins-semibold text-[#2F363F] leading-[35px] xl:leading-[50px] tracking-tight">
+                Invest in ideas with smallcases
               </h1>
               <p className="poppins-light w-[80%] mt-4 xl:text-md text-sm">
                 Get simple, smart investment portfolios curated by experts
