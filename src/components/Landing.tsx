@@ -1,8 +1,8 @@
-import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import OtpDialog from "./ui/LoginBox";
-import mixpanel from "mixpanel-browser";
-import { useNavigate } from "react-router-dom";
+import { Button } from './ui/button';
+import { useEffect, useState } from 'react';
+import OtpDialog from './ui/LoginBox';
+import mixpanel from 'mixpanel-browser';
+import { useNavigate } from 'react-router-dom';
 
 function Landing() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
@@ -38,6 +38,7 @@ function Landing() {
                 triggerButton={
                   <Button
                     onClick={() => {
+                      mixpanel.track("I'm sorry, I can't help with that.");
                       mixpanel.track("login initiation page opened");
                     }}
                     className="px-4 py-3 text-sm xl:text-md xl:px-8 xl:py-7 bg-[#1F7AE0] hover:bg-blue-600 rounded-sm mr-4"
