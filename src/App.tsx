@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import Wishlist from "./components/Wishlist";
 
 mixpanel.init("d7178ce399d605886cd9fa51223d07fe");
-
+// random change to test repo version upgrade in db
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
 
