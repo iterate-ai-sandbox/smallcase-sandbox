@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "export ITERATE_API_KEY=d666bffd9265931477445a6f06a09935af12814b3fa9ff43e62a9a95ccf640fb && export ITERATE_OWNER=iterate-ai-sandbox && export ITERATE_PROJECT=smallcase-sandbox && tsc -b && vite build",
+    "build": "export ITERATE_API_KEY=917ef1573b5c74729650eb39d38472d64d0651845d3d3d1905da950200aa69a0 && export ITERATE_OWNER=iterate-ai-sandbox && export ITERATE_PROJECT=smallcase-sandbox && tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "export ITERATE_API_KEY=d666bffd9265931477445a6f06a09935af12814b3fa9ff43e62a9a95ccf640fb && export ITERATE_OWNER=iterate-ai-sandbox && export ITERATE_PROJECT=smallcase-sandbox && vite preview"
+    "preview": "export ITERATE_API_KEY=917ef1573b5c74729650eb39d38472d64d0651845d3d3d1905da950200aa69a0 && export ITERATE_OWNER=iterate-ai-sandbox && export ITERATE_PROJECT=smallcase-sandbox && vite preview"
   },
   "dependencies": {
     "@babel/parser": "^7.25.3",
