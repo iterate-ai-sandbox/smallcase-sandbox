@@ -1,3 +1,16 @@
+import { smallcases, strategies } from '@/lib/smallcases';
+import { addSorting } from '@/reducers/sorting';
+import { addWishlist, removeFromWishlist } from '@/reducers/wishlist';
+import { RootState } from '@/store';
+import mixpanel from 'mixpanel-browser';
+import { useEffect, useState } from 'react';
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
+import { ImMeter } from 'react-icons/im';
+import { RiSlowDownFill } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Discover from '../Discover';
+import { Button } from '../ui/button';
 import {
   Select,
   SelectContent,
@@ -7,19 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { smallcases, strategies } from "@/lib/smallcases";
-import { addSorting } from "@/reducers/sorting";
-import { addWishlist, removeFromWishlist } from "@/reducers/wishlist";
-import { RootState } from "@/store";
-import mixpanel from "mixpanel-browser";
-import { useEffect, useState } from "react";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { ImMeter } from "react-icons/im";
-import { RiSlowDownFill } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Discover from "../Discover";
-import { Button } from "../ui/button";
 
 interface CAGR {
   time: string;
@@ -120,8 +120,20 @@ function Smallcases() {
           </div>
         </div>
         <div className="flex justify-between mt-2 text-sm gap-2 2xl:flex-row flex-col">
-          <p className="text-sm text-gray-600 2xl:w-[40%] w-fit">
-            {smallcase.description}
+          <p
+            className="text-sm text-gray-600 2xl:w-[40%] w-fit"
+            onClick={() => {
+              mixpanel.track("smallcase_description_clicked", {
+                investment_name: smallcase.name,
+                investment_return: smallcase.cagr
+                  .find((cagr) => cagr.time === cagrTime)
+                  ?.cagr.toString(),
+                investment_provider: smallcase.by,
+              });
+            }}
+          >
+            {" "}
+            {smallcase.description}{" "}
           </p>
           <div className="flex items-start md:items-center justify-start gap-6 md:flex-row flex-col">
             <div className="w-max">
@@ -176,7 +188,7 @@ function Smallcases() {
     setSelectedStrategies((prev) =>
       prev.includes(strategy)
         ? prev.filter((s) => s !== strategy)
-        : [...prev, strategy]
+        : [...prev, strategy],
     );
   };
 
@@ -184,7 +196,7 @@ function Smallcases() {
     setSelectedVolatility((prev) =>
       prev.includes(volatility)
         ? prev.filter((v) => v !== volatility)
-        : [...prev, volatility]
+        : [...prev, volatility],
     );
   };
 
