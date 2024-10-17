@@ -1,3 +1,13 @@
+import { smallcases } from '@/lib/smallcases';
+import { cn } from '@/lib/utils';
+import { addSorting } from '@/reducers/sorting';
+import { motion } from 'framer-motion';
+import mixpanel from 'mixpanel-browser';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../ui/button';
+import { Smallcase } from './Smallcases';
 import {
   Select,
   SelectContent,
@@ -7,16 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { smallcases } from "@/lib/smallcases";
-import { cn } from "@/lib/utils";
-import { addSorting } from "@/reducers/sorting";
-import { motion } from "framer-motion";
-import mixpanel from "mixpanel-browser";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
-import { Smallcase } from "./Smallcases";
 
 const tabs = ["Collections", "All smallcases", "Managers"];
 
@@ -37,7 +37,7 @@ const Tab = ({ text, selected, setSelected, customID }: TabProps) => {
         navigate(
           text.toLowerCase() === "all smallcases"
             ? "/discover/smallcases"
-            : "/discover/explore"
+            : "/discover/explore",
         );
       }}
       className="hover:text-[#1F7AE0]
@@ -66,7 +66,9 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState<string>(
-    location.pathname === "/discover/explore" ? "Collections" : "All smallcases"
+    location.pathname === "/discover/explore"
+      ? "Collections"
+      : "All smallcases",
   );
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [cagrTime, setCagrTime] = useState<string>("1Y");
@@ -84,7 +86,7 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
   useEffect(() => {
     if (searchQuery?.length >= 3) {
       const searchedSmallcases = smallcases.filter((data) =>
-        data.name.toLowerCase().includes(searchQuery.toLowerCase())
+        data.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       if (searchedSmallcases.length > 0) {
         setSmallcases(searchedSmallcases);
@@ -131,7 +133,7 @@ const LineTabs = ({ center, customID }: LineTabProps) => {
       <div
         className={cn(
           "flex flex-wrap items-center gap-2",
-          center && "justify-center"
+          center && "justify-center",
         )}
       >
         {tabs.map((tab) => (
