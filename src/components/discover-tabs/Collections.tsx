@@ -1,15 +1,14 @@
-import { useEffect } from "react";
-import mixpanel from "mixpanel-browser";
-import Discover from "../Discover";
+import { useEffect } from 'react';
+import mixpanel from 'mixpanel-browser';
+import Discover from '../Discover';
 
 function Collections() {
   useEffect(() => {
-    mixpanel.track("discover page opened");
+    mixpanel.track("explore_smallcases_page_visited");
   }, []);
   return (
     <>
       <Discover />
-
       <div className="collections">
         <div className="top">
           <img
@@ -25,6 +24,9 @@ function Collections() {
             className="w-full object-cover"
           />
         </div>
+        <button onClick={() => mixpanel.track("all_smallcases_clicked")}>
+          <span>All smallcases</span>
+        </button>
       </div>
     </>
   );
